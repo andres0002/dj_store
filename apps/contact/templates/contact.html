@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Contact
+{% endblock title %}
+{% block content %}
+    <!-- Message -->
+    <section class="page-section cta" style="background-color: transparent;">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <div class="text-center card-form-contact">
+                        <div class="card-form-contact-in">
+                            <h2 class="section-heading mb-4">
+                            <!-- <span class="section-heading-upper">Compromiso total</span> -->
+                            <span class="section-heading-lower" style="font-size: 35px;">Contact Us</span>
+                            </h2>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <!-- name -->
+                                <div class="field-form-contact">
+                                    {{ form.name.label }}
+                                    {{ form.name }}
+                                    <div {% if form.name.errors %}style="margin: 10px;"{% endif %}>
+                                        {% if form.name.errors %}
+                                            {% for error in form.name.errors %}
+                                                <div class="alert alert-danger alert-dismissble">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <strong>Error: {{ error | escape }}</strong>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <!-- email -->
+                                <div class="field-form-contact">
+                                    {{ form.email.label }}
+                                    {{ form.email }}
+                                    <div {% if form.email.errors %}style="margin: 10px;"{% endif %}>
+                                        {% if form.email.errors %}
+                                            {% for error in form.email.errors %}
+                                                <div class="alert alert-danger alert-dismissble">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <strong>Error: {{ error | escape }}</strong>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <!-- content -->
+                                <div class="field-form-contact">
+                                    {{ form.content.label }}
+                                    {{ form.content }}
+                                    <div {% if form.content.errors %}style="margin: 10px;"{% endif %}>
+                                        {% if form.content.errors %}
+                                            {% for error in form.content.errors %}
+                                                <div class="alert alert-danger alert-dismissble">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <strong>Error: {{ error | escape }}</strong>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <button type="submit" class="btn btn-primary btn-send-contact">Send</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

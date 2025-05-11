@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Services
+{% endblock title %}
+{% block content %}
+    {% if services %}
+        {% for service in services %}
+            <!-- Heading -->
+            <section class="page-section clearfix">
+                <div class="container">
+                    <div class="intro">
+                        <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src={{service.img.url}} alt="">
+                        <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+                            <h2 class="section-heading mb-4">
+                                <!-- <span class="section-heading-upper">{{service.name}}</span> -->
+                                <span class="section-heading-lower">{{service.name}}</span>
+                            </h2>
+                            <p class="mb-3">
+                                {{service.content}}
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endfor %}
+    {% else %}
+        <!-- Heading -->
+        <section class="page-section clearfix">
+            <div class="container">
+                <div class="intro">
+                    <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src='{% static "/img/principal.jpg" %}' alt="">
+                    <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+                        <h2 class="section-heading mb-4">
+                            <!-- <span class="section-heading-upper">Puntualidad</span> -->
+                            <span class="section-heading-lower">Ningúno</span>
+                        </h2>
+                        <p class="mb-3">
+                            No hay ningún service registered in the sistem.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock content %}

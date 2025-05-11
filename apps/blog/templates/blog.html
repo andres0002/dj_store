@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Blog
+{% endblock title %}
+{% block content %}
+    <!-- search -->
+    <section class="page-section cta" style="background-color: transparent;">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 mx-auto">
+                    <form method="get">
+                        <div id="custom-search-input">
+                            <div class="input-group col-md-12">
+                                <input type="text" class="form-control" placeholder="search..." name="search"
+                                    value="{{ request.GET.search }}">
+                                <span class="input-group-list">
+                                    <i class="icon icon-search"></i>
+                                    <button type="submit" class="btn btn-success" style="background-color: rgba(24, 64, 8, 0.8); border-color: transparent;">Search</button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% if posts %}
+        <!-- Heading -->
+        {% for post in posts %}
+            <section class="page-section clearfix">
+                <div class="container">
+                    <a href="{% url 'blog:detail_post' post.slug %}">
+                        <div class="intro">
+                            <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src={{post.image}} alt="{{post.title}}">
+                            <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+                                <h2 class="section-heading mb-4">
+                                    <!-- <span class="section-heading-upper">{{service.name}}</span> -->
+                                    <span class="section-heading-lower">{{ post.title }}</span>
+                                </h2>
+                                <p class="mb-3">
+                                    {{ post.description }}
+                                </p>
+                                <p class="mb-3">
+                                    Posted by
+                                    <strong>{{ post.author }}</strong> the
+                                    {{ post.create_date }} - Category <strong>{{ post.get_categories }}</strong>
+                                </p>
+                                <hr style="background-color: #fff;">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        {% endfor %}
+        <!-- Paginator -->
+        <section class="page-section cta" style="background-color: rgba(24, 64, 8, 0.8);">
+            <div class="container">
+                <div class="row justify-content-between align-items-center col-xl-8 mx-auto" style="border-radius: 8px; color: #fff;">
+                    {% if posts.has_previous %}
+                        <a href="?page={{ posts.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+                            class="btn btn-primary" style="background-color: rgba(24, 64, 8, 0.8); border-color: rgba(24, 64, 8, 0.8); box-shadow: 0 0 2px #fff;">Previous</a>
+                        {% elif posts and not posts.has_previous %}
+                            <a class="btn btn-primary" style="background-color: rgba(24, 64, 8, 0.8); color: #9e9e9e !important; border-color: rgba(24, 64, 8, 0.8); box-shadow: 0 0 2px #fff;">Previous</a>
+                        {% else %}
+                            <span></span>
+                        {% endif %}
+                        {% if posts.has_previous or posts.has_next %}
+                            <span>Página {{ posts.number }} de {{ posts.paginator.num_pages }}</span>
+                        {% else %}
+                            <span></span>
+                        {% endif %}
+                        {% if posts.has_next %}
+                            <a href="?page={{ posts.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+                                class="btn btn-primary" style="background-color: rgba(24, 64, 8, 0.8); border-color: rgba(24, 64, 8, 0.8); box-shadow: 0 0 2px #fff;">Following</a>
+                        {% elif posts and not posts.has_next %}
+                            <a class="btn btn-primary" style="background-color: rgba(24, 64, 8, 0.8); color: #9e9e9e !important; border-color: rgba(24, 64, 8, 0.8); box-shadow: 0 0 2px #fff;">Following</a>
+                        {% else %}
+                            <span></span>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        <!-- Categories -->
+        <section class="page-section cta" style="background-color: rgba(24, 64, 8, 0.8);">
+            <div class="container">
+                <div class="row justify-content-center align-items-center col-xl-8 mx-auto" style="border-radius: 8px; color: #fff;">
+                    Categories:
+                    {% for category in categories %}
+                        &nbsp;<strong><a href="{% url 'blog:category' category.pk %}" class="link-categories">{{category.name}}</a></strong>&nbsp;
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% else %}
+        <!-- Heading -->
+        <section class="page-section clearfix">
+            <div class="container">
+                <div class="intro">
+                    <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src='{% static "/img/principal.jpg" %}' alt="">
+                    <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+                        <h2 class="section-heading mb-4">
+                            <!-- <span class="section-heading-upper">Puntualidad</span> -->
+                            <span class="section-heading-lower">Ningúno</span>
+                        </h2>
+                        <p class="mb-3">
+                            No hay ningún post registered in the sistem.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock content %}

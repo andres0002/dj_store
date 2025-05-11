@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Blog
+{% endblock title %}
+{% block content %}
+    <!-- Heading -->
+    <section class="page-section clearfix">
+        <div class="container">
+            <div class="intro">
+                <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src={{post.image}} alt="{{post.title}}">
+                <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+                    <h2 class="section-heading mb-4">
+                        <!-- <span class="section-heading-upper">{{service.name}}</span> -->
+                        <span class="section-heading-lower">{{ post.title }}</span>
+                    </h2>
+                    <p class="mb-3">
+                        {{ post.description }}
+                    </p>
+                    <p class="mb-3">
+                        Posted by
+                        <strong>{{ post.author }}</strong> the
+                        {{ post.create_date }} - Category <strong>{{ post.get_categories }}</strong>
+                    </p>
+                    <hr style="background-color: #fff;">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Message -->
+    <section class="page-section cta">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <div class="post-preview">
+                        <hr style="background-color: #444;">
+                        <p style="color: #fff;">
+                            {{ post.content | safe }}
+                        </p>
+                    </div>
+                    <hr style="background-color: #444;">
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

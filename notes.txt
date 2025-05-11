@@ -1,0 +1,26 @@
+# -----------------------------------------start send emails----------------------------------------------------
+settings -> base.py:------------------------------------------------------
+
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_USE_TLS=True
+EMAIL_PORT=587
+EMAIL_HOST_USER='test@gmail.com'
+EMAIL_HOST_PASSWORD='password'
+
+views.py:------------------------------------------------------------------
+
+from django.conf import settings
+from django.core.mail import send_mail
+
+send_mail(
+    subject='Subject',
+    message='Message',
+    from=settings.EMAIL_HOST_USER, # from.
+    to=[ # to.
+        'test2gmail.com',
+        'test3gmail.com',
+    ],
+    fail_silently=False # para que no falle en silencio.
+)
+# -----------------------------------------end send emails----------------------------------------------------

@@ -10,7 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+# py
 from pathlib import Path
+# django
+# third
+from decouple import config
+# own
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -29,11 +34,28 @@ BASE_APPS = [
     'django.contrib.staticfiles',
 ]
 
-THIRD_APPS = []
+THIRD_APPS = [
+    'import_export',
+    'django_extensions',
+    'ckeditor',
+]
+
+# Django CKEditor
+# https://django-ckeditor.readthedocs.io/en/latest/
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+    },
+}
 
 OWN_APPS = [
     'apps.base',
     'apps.user',
+    'apps.services',
+    'apps.blog',
+    'apps.contact',
+    'apps.store',
 ]
 
 INSTALLED_APPS = BASE_APPS + THIRD_APPS + OWN_APPS
@@ -85,12 +107,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# user custom.
+AUTH_USER_MODEL = 'user.Users'
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC' # hora interna del system.
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
@@ -110,3 +136,55 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# logs
+
+# DEBUG: Mensajes detallados, generalmente útiles para la depuración.
+
+# INFO: Mensajes informativos sobre el funcionamiento normal de la aplicación.
+
+# WARNING: Mensajes que indican situaciones inusuales pero no críticas.
+
+# ERROR: Mensajes que indican errores que afectan a la funcionalidad.
+
+# CRITICAL: Errores graves que probablemente causen la falla de la aplicación.
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'verbose': {
+            'format': '[{levelname}] {asctime} {name} | {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+            'level': 'DEBUG', # Captura todos los niveles de log, incluyendo DEBUG
+        },
+        'file_contact_views': {
+            'level': 'DEBUG', # Captura todos los niveles de log, incluyendo DEBUG
+            'class': 'logging.FileHandler',
+            # Usamos str() para convertir la ruta de Path a una cadena
+            'filename': str(BASE_DIR / 'logs' / 'contact.log'),
+            'formatter': 'verbose',
+        },
+    },
+
+    'loggers': {
+        # Logger para el contact views.
+        'apps.contact.views': {
+            'handlers': ['console', 'file_contact_views'],
+            'level': 'DEBUG', # Captura todos los niveles de log para este logger
+            'propagate': False, # evita que el log se propague a loggers de nivel superior (evita mensajes duplicados).
+        },
+    }
+}
