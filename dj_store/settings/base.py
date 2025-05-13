@@ -56,6 +56,7 @@ OWN_APPS = [
     'apps.blog',
     'apps.contact',
     'apps.store',
+    'apps.cart',
 ]
 
 INSTALLED_APPS = BASE_APPS + THIRD_APPS + OWN_APPS
@@ -82,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.cart.context_processors.sum_total_cart',
             ],
         },
     },

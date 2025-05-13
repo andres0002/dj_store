@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Login
+{% endblock title %}
+{% block content %}
+    <!-- Message -->
+    <section class="page-section cta" style="background-color: transparent;">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <div class="text-center card-form-contact">
+                        <div class="card-form-contact-in">
+                            <h2 class="section-heading mb-4">
+                            <!-- <span class="section-heading-upper">Compromiso total</span> -->
+                            <span class="section-heading-lower" style="font-size: 35px;">Login In</span>
+                            </h2>
+                            <form method="POST">
+                                {% csrf_token %}
+                                {% if form.non_field_errors %}
+                                    {% for error in form.non_field_errors %}
+                                        <div class="alert alert-danger alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <strong>Error: {{ error|escape }}</strong>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                <!-- username -->
+                                <div class="field-form-contact" style="margin-bottom: 10px;">
+                                    {{ form.username.label }}
+                                    {{ form.username }}
+                                </div>
+                                <!-- password -->
+                                <div class="field-form-contact" style="margin-bottom: 10px;">
+                                    {{ form.password.label }}
+                                    {{ form.password }}
+                                </div>
+                                <div style="text-align: center;">
+                                    <button type="submit" class="btn btn-primary btn-send-contact">Login In</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

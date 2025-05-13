@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Cart
+{% endblock title %}
+{% block content %}
+    <!-- Message -->
+    <section class="page-section cta" style="background-color: transparent;">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <div class="text-center card-form-contact">
+                        <div class="card-form-contact-in">
+                            <h2 class="section-heading mb-4">
+                                <!-- <span class="section-heading-upper">Compromiso total</span> -->
+                                <span class="section-heading-lower" style="font-size: 35px;">Shopping Cart</span>
+                            </h2>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" style="color: #fff;">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center align-middle">Product</th>
+                                            <th class="text-center align-middle">Amount</th>
+                                            <th class="text-center align-middle">Price</th>
+                                            <th class="text-center align-middle">Total</th>
+                                            <th class="text-center align-middle">Options</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if request.session.cart.items %}
+                                            {% for key, product in request.session.cart.items %}
+                                            <tr>
+                                                <td class="text-center align-middle">{{product.name}}</td>
+                                                <td class="text-center align-middle">{{product.amount}}</td>
+                                                <td class="text-center align-middle">{{product.price}}</td>
+                                                <td class="text-center align-middle">{{product.total}}</td>
+                                                <td class="text-center align-middle">
+                                                    <div class="text-center">
+                                                        <a
+                                                            href="{% url 'cart:add_product_in_cart' product.pk %}"
+                                                            class="btn btn-success"
+                                                            style="background-color: rgba(24, 64, 8, 0.8);">
+                                                            +
+                                                        </a>
+                                                        <a
+                                                            href="{% url 'cart:subtract_product' product.pk %}"
+                                                            class="btn btn-danger"
+                                                            style="background-color: rgba(24, 64, 8, 0.8);">
+                                                            -
+                                                        </a>
+                                                        <a
+                                                            href="{% url 'cart:delete_product' product.pk %}"
+                                                            class="btn btn-danger"
+                                                            style="background-color: rgba(24, 64, 8, 0.8);">
+                                                            Delete
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="5" class="text-center align-middle">
+                                                    <div
+                                                        class="card card-danger"
+                                                        style="color: #f22; padding: 20px; font-size: 20px; font-weight: 700; font-family: sans-serif;">
+                                                        No products in the cart.
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td class="text-center align-middle"><strong>Total</strong></td>
+                                            <td colspan="4" class="text-center align-middle"><strong>{{sum_total_cart}} $</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5" class="text-center align-middle">
+                                                <a
+                                                    href="{% url 'cart:clean_cart' %}"
+                                                    class="btn btn-success"
+                                                    style="background-color: rgba(24, 64, 8, 0.8);">
+                                                    Clean Cart
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="text">
+                                <a href="#" class="btn btn-success" style="background-color: rgba(24, 64, 8, 0.8);">Buy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

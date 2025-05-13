@@ -42,26 +42,69 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item px-lg-4 {% if request.path == '/' %}active{% endif %}">
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item px-lg-4 {% if request.path == '/' %}active{% endif %}">
                         <a class="nav-link text-uppercase text-expanded" href="{% url 'base:home' %}">Home</a>
-                    </li>
-                    <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':10' == '/services/' %}active{% endif %}"> otra forma que comience con -->
-                    <li class="nav-item px-lg-4 {% if request.path|startswith:'/services/' %}active{% endif %}">
-                        <a class="nav-link text-uppercase text-expanded" href="{% url 'services:home' %}">Services</a>
-                    </li>
-                    <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':7' == '/store/' %}active{% endif %}"> otra forma que comience con -->
-                    <li class="nav-item px-lg-4 {% if request.path|startswith:'/store/' %}active{% endif %}">
-                        <a class="nav-link text-uppercase text-expanded" href="{% url 'store:home' %}">Store</a>
-                    </li>
-                    <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':6' == '/blog/' %}active{% endif %}"> otra forma que comience con -->
-                    <li class="nav-item px-lg-4 {% if request.path|startswith:'/blog/' %}active{% endif %}">
-                        <a class="nav-link text-uppercase text-expanded" href="{% url 'blog:home' %}">Blog</a>
-                    </li>
-                    <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':9' == '/contact/' %}active{% endif %}"> otra forma que comience con -->
-                    <li class="nav-item px-lg-4 {% if request.path|startswith:'/contact/' %}active{% endif %}">
-                        <a class="nav-link text-uppercase text-expanded" href="{% url 'contact:home' %}">Contact</a>
-                    </li>
-
+                        </li>
+                        <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':10' == '/services/' %}active{% endif %}"> otra forma que comience con -->
+                        <li class="nav-item px-lg-4 {% if request.path|startswith:'/services/' %}active{% endif %}">
+                            <a class="nav-link text-uppercase text-expanded" href="{% url 'services:home' %}">Services</a>
+                        </li>
+                        <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':7' == '/store/' %}active{% endif %}"> otra forma que comience con -->
+                        <li class="nav-item px-lg-4 {% if request.path|startswith:'/store/' %}active{% endif %}">
+                            <a class="nav-link text-uppercase text-expanded" href="{% url 'store:home' %}">Store</a>
+                        </li>
+                        <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':6' == '/blog/' %}active{% endif %}"> otra forma que comience con -->
+                        <li class="nav-item px-lg-4 {% if request.path|startswith:'/blog/' %}active{% endif %}">
+                            <a class="nav-link text-uppercase text-expanded" href="{% url 'blog:home' %}">Blog</a>
+                        </li>
+                        <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':9' == '/contact/' %}active{% endif %}"> otra forma que comience con -->
+                        <li class="nav-item px-lg-4 {% if request.path|startswith:'/contact/' %}active{% endif %}">
+                            <a class="nav-link text-uppercase text-expanded" href="{% url 'contact:home' %}">Contact</a>
+                        </li>
+                        <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':6' == '/cart/' %}active{% endif %}"> otra forma que comience con -->
+                        <li class="nav-item px-lg-4 {% if request.path|startswith:'/cart/' %}active{% endif %}">
+                            <a class="nav-link text-uppercase text-expanded position-relative" href="{% url 'cart:home' %}">
+                                Shopping Cart
+                                {% if request.session.cart|length > 0 %}
+                                    <span class="notification-badge-cart">{{ request.session.cart|length }}</span>
+                                {% endif %}
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':22' == '/user/password_change/' %}active{% endif %}"> otra forma que comience con -->
+                        <li class="nav-item px-lg-4 {% if request.path|startswith:'/user/password_change/' %}active{% endif %}">
+                            <a class="nav-link text-uppercase text-expanded" href="{% url 'user:password_change' %}">
+                                Password Change
+                            </a>
+                        </li>
+                        <li class="nav-item px-lg-4">
+                            <a class="nav-link text-uppercase text-expanded" href="{% url 'user:logout' %}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item px-lg-4 {% if request.path == '/' %}active{% endif %}">
+                        <a class="nav-link text-uppercase text-expanded" href="{% url 'base:home' %}">Home</a>
+                        </li>
+                        <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':10' == '/services/' %}active{% endif %}"> otra forma que comience con -->
+                        <li class="nav-item px-lg-4 {% if request.path|startswith:'/services/' %}active{% endif %}">
+                            <a class="nav-link text-uppercase text-expanded" href="{% url 'services:home' %}">Services</a>
+                        </li>
+                        <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':6' == '/blog/' %}active{% endif %}"> otra forma que comience con -->
+                        <li class="nav-item px-lg-4 {% if request.path|startswith:'/blog/' %}active{% endif %}">
+                            <a class="nav-link text-uppercase text-expanded" href="{% url 'blog:home' %}">Blog</a>
+                        </li>
+                        <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':9' == '/contact/' %}active{% endif %}"> otra forma que comience con -->
+                        <li class="nav-item px-lg-4 {% if request.path|startswith:'/contact/' %}active{% endif %}">
+                            <a class="nav-link text-uppercase text-expanded" href="{% url 'contact:home' %}">Contact</a>
+                        </li>
+                        <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':12' == '/user/login/' %}active{% endif %}"> otra forma que comience con -->
+                        <li class="nav-item px-lg-4 {% if request.path|startswith:'/user/login/' %}active{% endif %}">
+                            <a class="nav-link text-uppercase text-expanded" href="{% url 'user:login' %}">Login In</a>
+                        </li>
+                        <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':15' == '/user/register/' %}active{% endif %}"> otra forma que comience con -->
+                        <li class="nav-item px-lg-4 {% if request.path|startswith:'/user/register/' %}active{% endif %}">
+                            <a class="nav-link text-uppercase text-expanded" href="{% url 'user:register' %}">Register</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -111,9 +154,9 @@
                 </a>
             </p>
             <p class="m-0 mbt">
-                <a href="sample.html" class="link">Política de privacidad</a> ·
-                <a href="sample.html" class="link">Aviso legal</a> ·
-                <a href="sample.html" class="link">Cookies</a>
+                <a href="#" class="link">Política de privacidad</a> ·
+                <a href="#" class="link">Aviso legal</a> ·
+                <a href="#" class="link">Cookies</a>
             </p>
             <p class="m-0 mbt1">&copy; W.A.R.J - Order Management 2025</p>
         </div>

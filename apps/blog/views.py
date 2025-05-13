@@ -36,7 +36,7 @@ def blog(request, *args, **kwargs):
     return render(request, template_name, {'posts':posts,'categories':categories})
 
 def category(request, pk, *args, **kwargs):
-    template_name = 'blog.html'
+    template_name = 'blog_category.html'
     # print(request.path)
     search = request.GET.get('search')
     category = Categories.objects.filter(pk=pk).first()
@@ -66,7 +66,7 @@ def category(request, pk, *args, **kwargs):
     return render(request, template_name, {'posts':posts,'categories':categories})
 
 def detail_post(request, slug, *args, **kwargs):
-    template_name = 'post.html'
+    template_name = 'blog_post.html'
     # print(request.path)
     post = get_object_or_404(Posts, slug=slug)
     return render(request, template_name, {'post': post})

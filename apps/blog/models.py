@@ -23,7 +23,7 @@ class Categories(models.Model):
         # Buscar si ya existe otra categoría con el mismo nombre, sin importar mayúsculas o minusculas.
         if Categories.objects.filter(name__iexact=self.name).exclude(id=self.id).exists():
             raise ValidationError({
-                'name_category': "Ya existe una categoría con ese nombre (sin importar mayúsculas, minúsculas y espacios al inicio o al final)."
+                'name': "Ya existe una categoría con ese nombre (sin importar mayúsculas, minúsculas y espacios al inicio o al final)."
             })
     
     def seve(self, *args, **kwargs):
