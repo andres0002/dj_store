@@ -75,8 +75,7 @@ def process_order(request, *args, **kwargs):
             # email ok.
             if ok:
                 logger.info(f'Mail send successfully -> Username: {user.username.strip()}, Full Name: {full_name}, email: {user.email}.')
-                request.session['cart'] = {}
-                request.session.modified = True
+                cart.clean()
                 messages.success(request, 'SuccessFully Order creation.')
                 return redirect('store:home')
             # email NO ok.
