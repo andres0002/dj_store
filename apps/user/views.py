@@ -1,8 +1,8 @@
 # py
 # djnago
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.views.generic import View
+from django.urls import reverse_lazy, reverse
+from django.views.generic import View, UpdateView
 from django.views.generic.edit import FormView
 from django.contrib.auth import login, logout
 from django.utils.decorators import method_decorator
@@ -86,3 +86,17 @@ class UsersPasswordChangeView(LoginRequiredMixin, View):
             return redirect(self.success_url)
         messages.error(request, 'Errorful change password.')
         return render(request, self.template_name, {'form': form})
+
+class UsersPerfilView(LoginRequiredMixin, UpdateView):
+    model = Users
+    form_class = UsersForm
+    template_name = 'perfil.html'
+    
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, instance=self.get_object())
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully User updation.')
+            return redirect(request.META.get('HTTP_REFERER', reverse('user:perfil', kwargs={'pk': request.user.pk})))
+        messages.error(request, 'Errorful User updation.')
+        return render(request, self.template_name, {'form':form})

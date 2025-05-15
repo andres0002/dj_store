@@ -15,11 +15,13 @@
     </title>
     <!-- Bootstrap -->
     <link href='{% static "/vendor/bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
     <!-- Styles -->
     <link href='{% static "/css/gestion.css" %}' rel="stylesheet">
+    <link href='{% static "/css/loader.css" %}' rel="stylesheet">
     <!-- extra css -->
     {% block extra_css %}
     {% endblock extra_css %}
@@ -71,14 +73,45 @@
                                 {% endif %}
                             </a>
                         </li>
-                        <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':22' == '/user/password_change/' %}active{% endif %}"> otra forma que comience con -->
-                        <li class="nav-item px-lg-4 {% if request.path|startswith:'/user/password_change/' %}active{% endif %}">
-                            <a class="nav-link text-uppercase text-expanded" href="{% url 'user:password_change' %}">
-                                Password Change
+                        <li class="nav-item px-lg-4 dropdown-custom {% if request.path|startswith:'/user/' %}active{% endif %}">
+                            <a
+                                class="nav-link text-uppercase text-expanded dropdown-toggle-custom"
+                                href="#"
+                                id="navbarDropdown">
+                                User
+                                <i class="bi bi-arrow-down-short"></i>
                             </a>
-                        </li>
-                        <li class="nav-item px-lg-4">
-                            <a class="nav-link text-uppercase text-expanded" href="{% url 'user:logout' %}">Logout</a>
+                            <ul class="dropdown-menu-custom" aria-labelledby="navbarDropdown">
+                                <li class="nav-item-sub px-lg-4 {% if request.path|startswith:'/user/perfil/' %}active{% endif %}">
+                                    <a
+                                        class="nav-link text-uppercase text-expanded"
+                                        href="{% url 'user:perfil' request.user.pk %}">
+                                        Perfil -> Hello {{ request.user.name|cut:" " }} {{ request.user.lastname|cut:" " }}
+                                    </a>
+                                </li>
+                                <li class="nav-item-sub px-lg-4 {% if request.path|startswith:'/user/config/' %}active{% endif %}">
+                                    <a
+                                        class="nav-link text-uppercase text-expanded"
+                                        href="#">
+                                        Configuración
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li class="nav-item-sub px-lg-4 {% if request.path|startswith:'/user/password_change/' %}active{% endif %}">
+                                    <a 
+                                        class="nav-link text-uppercase text-expanded"
+                                        href="{% url 'user:password_change' %}">
+                                        Password Change
+                                    </a>
+                                </li>
+                                <li class="nav-item-sub px-lg-4 {% if request.path|startswith:'/user/logout/' %}active{% endif %}">
+                                    <a 
+                                        class="nav-link text-uppercase text-expanded"
+                                        href="{% url 'user:logout' %}">
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     {% else %}
                         <li class="nav-item px-lg-4 {% if request.path == '/' %}active{% endif %}">
@@ -87,6 +120,10 @@
                         <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':10' == '/services/' %}active{% endif %}"> otra forma que comience con -->
                         <li class="nav-item px-lg-4 {% if request.path|startswith:'/services/' %}active{% endif %}">
                             <a class="nav-link text-uppercase text-expanded" href="{% url 'services:home' %}">Services</a>
+                        </li>
+                        <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':7' == '/store/' %}active{% endif %}"> otra forma que comience con -->
+                        <li class="nav-item px-lg-4 {% if request.path|startswith:'/store/' %}active{% endif %}">
+                            <a class="nav-link text-uppercase text-expanded" href="{% url 'store:home' %}">Store</a>
                         </li>
                         <!-- <li class="nav-item px-lg-4 {% if request.path|slice:':6' == '/blog/' %}active{% endif %}"> otra forma que comience con -->
                         <li class="nav-item px-lg-4 {% if request.path|startswith:'/blog/' %}active{% endif %}">
@@ -161,17 +198,22 @@
             <p class="m-0 mbt1">&copy; W.A.R.J - Order Management 2025</p>
         </div>
     </footer>
+    <button onclick="scrollToTop()" id="scrollToTopBtn" class="btn btn-dark rounded-circle shadow" title="Volver arriba">
+        <i class="bi bi-arrow-up-short"></i>
+    </button>
+    <div class="loader-overlay" id="loader">
+        <div class="loader"></div>
+    </div>
     <!-- Bootstrap -->
     <script src='{% static "/vendor/jquery/jquery.min.js" %}'></script>
     <script src='{% static "/vendor/bootstrap/js/bootstrap.bundle.min.js" %}'></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{% static '/js/main.js' %}"></script>
+    <script src="{% static '/js/loader.js' %}"></script>
     <!-- sirve en general para cualquier message que mande django con su sistema de mensajes -->
     <script>
         {% if messages %}
-            let html_message = ''
             {% for message in messages %}
-                html_message += '{{ message }}'
                 {% if message.tags == 'error' %}
                     errorNotification("{{ message|escapejs }}");
                 {% elif message.tags == 'success' %}

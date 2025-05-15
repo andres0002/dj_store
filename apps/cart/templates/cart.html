@@ -88,9 +88,11 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <div class="text">
-                                <a href="#" class="btn btn-success" style="background-color: rgba(24, 64, 8, 0.8);">Buy</a>
-                            </div>
+                            {% if request.session.cart.items %}
+                                <div class="text-center align-middle">
+                                    <a href="{% url 'orders:process_order' %}" class="btn btn-success" style="background-color: rgba(24, 64, 8, 0.8);">Buy</a>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

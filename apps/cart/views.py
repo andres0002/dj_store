@@ -20,7 +20,7 @@ def add_product(request, pk, *args, **kwargs):
     cart = Cart(request)
     product = Products.objects.get(pk=pk)
     cart.add(product)
-    print(request.META)
+    # print(request.META)
     # redirige a la page desde donde se hace el reqeust, y sino al store.
     return redirect(request.META.get('HTTP_REFERER', reverse('store:home')))
 

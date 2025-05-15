@@ -57,6 +57,7 @@ OWN_APPS = [
     'apps.contact',
     'apps.store',
     'apps.cart',
+    'apps.orders',
 ]
 
 INSTALLED_APPS = BASE_APPS + THIRD_APPS + OWN_APPS
@@ -179,12 +180,25 @@ LOGGING = {
             'filename': str(BASE_DIR / 'logs' / 'contact.log'),
             'formatter': 'verbose',
         },
+        'file_orders_views': {
+            'level': 'DEBUG', # Captura todos los niveles de log, incluyendo DEBUG
+            'class': 'logging.FileHandler',
+            # Usamos str() para convertir la ruta de Path a una cadena
+            'filename': str(BASE_DIR / 'logs' / 'orders.log'),
+            'formatter': 'verbose',
+        },
     },
 
     'loggers': {
-        # Logger para el contact views.
+        # Logger para la app contact views.
         'apps.contact.views': {
             'handlers': ['console', 'file_contact_views'],
+            'level': 'DEBUG', # Captura todos los niveles de log para este logger
+            'propagate': False, # evita que el log se propague a loggers de nivel superior (evita mensajes duplicados).
+        },
+        # Logger para la app orders views.
+        'apps.orders.views': {
+            'handlers': ['console', 'file_orders_views'],
             'level': 'DEBUG', # Captura todos los niveles de log para este logger
             'propagate': False, # evita que el log se propague a loggers de nivel superior (evita mensajes duplicados).
         },

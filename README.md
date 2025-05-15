@@ -29,7 +29,7 @@ EMAIL_USE_TLS_DEV = use_tls_email
 
 EMAIL_HOST_USER_DEV = user_email
 
-EMAIL_HOST_PASSWORD_DEV = password_email
+EMAIL_HOST_PASSWORD_DEV = app_thirds_password_email
 
 ### qas
 SECRET_KEY_QAS = secret_key

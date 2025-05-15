@@ -24,8 +24,8 @@ def contact(request, *args, **kwargs):
             email = form.cleaned_data.get('email')
             content = form.cleaned_data.get('content')
             ok, error = send_email_gmail_with_email_message(
-                subject='Subject Email',
-                body={'name':name,'email':email,'content':content},
+                subject=f'Contact User -> {name}',
+                body={'template_name':'contact_email.html','name':name,'email':email,'content':content},
                 to=['test-aap@yopmail.com'],
                 reply_to=['test-aap@yopmail.com']
             )

@@ -98,6 +98,18 @@ p {
   text-decoration: underline;
 }
 
+/* own */
+.nav-item-sub .nav-link {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-weight: 800 !important;
+  text-decoration: none !important;
+}
+
+.nav-item-sub.active .nav-link {
+  color: #ffffff !important;
+  text-decoration: underline !important;
+}
+
 @media (min-width: 992px) {
   #mainNav .navbar-nav .nav-item .nav-link {
     font-size: 0.9rem;
@@ -109,6 +121,19 @@ p {
   #mainNav .navbar-nav .nav-item.active .nav-link:hover {
     color: #ffffff;
     text-decoration: underline;
+  }
+
+  /* own */
+  .nav-item-sub .nav-link {
+    font-size: 0.9rem !important;
+  }
+  .nav-item-sub .nav-link:hover {
+    color: rgba(255, 255, 255, 0.4) !important;
+    text-decoration: underline !important;
+  }
+  .nav-item-sub.active .nav-link:hover {
+    color: #ffffff !important;
+    text-decoration: underline !important;
   }
 }
 
@@ -332,19 +357,69 @@ ul.errorlist{
 }
 
 .notification-badge-cart {
-    position: absolute;
-    top: 0;
-    right: 10;
-    transform: translate(45%, -66%);
-    background: red;
-    color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 12px;
-    font-weight: bold;
-    /* display: flex; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    outline: auto;
+  position: absolute;
+  top: 0;
+  right: 10;
+  transform: translate(45%, -66%);
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+  /* display: flex; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: auto;
+}
+
+.navbar-fixed-top {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1030;
+  background-color: rgba(24, 64, 8); /* importante que tenga fondo */
+}
+
+#scrollToTopBtn {
+  display: none;
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 9999;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  line-height: 1;
+  text-align: center;
+  padding: 0;
+  transition: opacity 0.3s ease;
+}
+
+#scrollToTopBtn:hover {
+  background-color: #555;
+  border: none;
+}
+
+/* Oculta el menú por defecto dropdawn */
+.dropdown-menu-custom {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 0;
+  list-style: none;
+  margin-top: 0.5rem;
+}
+
+/* Mostrar el menú cuando está activo */
+.dropdown-custom.show .dropdown-menu-custom {
+  display: block;
+  background-color: rgba(24, 64, 8);
+  border: 2px solid rgb(69, 185, 23);
+  border-radius: 8px;
+  padding: 10px;
 }

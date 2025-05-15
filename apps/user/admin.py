@@ -16,8 +16,9 @@ class UsersResource(resources.ModelResource):
 
 class UsersAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     search_fields = ('username', 'email', 'name', 'lastname')
-    list_display = ('username', 'email', 'name', 'lastname', 'is_active', 'is_staff', 'is_superuser')
-    list_filter = ('is_active', 'is_staff', 'is_superuser')
+    list_display = ('username', 'email', 'name', 'lastname', 'is_active', 'is_staff', 'is_superuser', 'create_date', 'update_date')
+    list_filter = ('is_active', 'is_staff', 'is_superuser', 'create_date', 'update_date')
+    readonly_fields = ('create_date', 'update_date')
     source_class = UsersResource
 
 admin.site.register(Users, UsersAdmin)

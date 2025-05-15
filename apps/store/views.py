@@ -1,16 +1,14 @@
 # py
 # django
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.db.models import Q
 from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
 # third
 # own
 from apps.store.models import CategoriesProduct, Products
 
 # Create your views here.
 
-@login_required(login_url='user:login')
 def store(request, *args, **kwargs):
     template_name = 'store.html'
     # print(request.path)
@@ -34,7 +32,6 @@ def store(request, *args, **kwargs):
     products = paginator.get_page(page)
     return render(request, template_name, {'products':products,'categories':categories})
 
-@login_required(login_url='user:login')
 def category(request, pk, *args, **kwargs):
     template_name = 'store_category.html'
     # print(request.path)
